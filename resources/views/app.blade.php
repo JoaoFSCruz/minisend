@@ -17,12 +17,15 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="antialiased text-gray-900 bg-gray-50">
         @include('layouts.nav')
 
-        <div class="container mx-auto mt-12">
-            @yield('content')
+        <div class="container mx-auto mt-12" id="app">
+            <app></app>
         </div>
     </body>
 </html>
