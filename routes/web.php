@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\DownloadAttachmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('app');
 })->name('app');
+
+Route::get('/emails', [EmailController::class, 'index'])->name('emails.index');
+
+Route::get('/attachments/download', DownloadAttachmentController::class)->name('download.attachment');
