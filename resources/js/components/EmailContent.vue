@@ -2,7 +2,7 @@
     <div class="bg-gray-100 px-24 py-16 w-full h-full">
         <div class="flex flex-col space-y-16" v-if="email">
             <div>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center tracking-wide">
                     <h1 class="text-4xl text-gray-500">{{ email.subject }}</h1>
                     <div class="flex space-x-4 items-center">
                         <status-badge :status="email.status"></status-badge>
@@ -48,7 +48,7 @@
         </div>
         <div class="h-full flex justify-center items-center" v-else>
             <div class="flex flex-col items-center space-y-16">
-                <img class="h-64 w-auto" src="/imgs/mailbox_undraw.svg" alt="">
+                <img class="h-64 w-auto" src="/imgs/envelope_undraw.svg" alt="">
                 <p class="text-2xl">
                     You have not selected an email yet. Click on one of them at your left to see it's content.
                 </p>
