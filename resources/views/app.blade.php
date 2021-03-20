@@ -21,11 +21,7 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="antialiased text-gray-900 bg-gray-50">
-        @include('layouts.nav')
-
-        <div class="container mx-auto mt-12" id="app">
-            <app></app>
-        </div>
+    <body class="antialiased text-gray-600 bg-gray-50" id="app">
+        <app></app>
     </body>
 </html>
