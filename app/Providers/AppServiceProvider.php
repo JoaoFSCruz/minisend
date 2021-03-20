@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('max_upload_file_size', function ($attribute, $value, $parameters, $validator) {
+            $totalSize = array_reduce($value, static function ($sum, $file) {
+                $sum += $file->getSize();
+                return $sum;
+            });
+
+            return $totalSize < $parameters[0] * 1024;
+        });
     }
 }

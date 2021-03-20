@@ -29,7 +29,7 @@ class EmailRequest extends FormRequest
             'subject' => 'required|string',
             'text' => 'nullable|string',
             'html' => 'nullable|string',
-            'attachments' => 'nullable|array|max:10240',
+            'attachments' => 'nullable|array|max_upload_file_size:10000',
             'attachments.*' => 'file',
         ];
     }
