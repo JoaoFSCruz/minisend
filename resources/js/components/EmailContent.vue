@@ -48,7 +48,7 @@
         </div>
         <div class="h-full flex justify-center items-center" v-else>
             <div class="flex flex-col items-center space-y-16">
-                <img class="h-64 w-auto" src="/imgs/envelope_undraw.svg" alt="">
+                <img class="h-64 w-auto" src="/img/envelope_undraw.svg" alt="">
                 <p class="text-2xl">
                     You have not selected an email yet. Click on one of them at your left to see it's content.
                 </p>

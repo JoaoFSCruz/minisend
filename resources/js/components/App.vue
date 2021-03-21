@@ -32,7 +32,7 @@
                     </div>
                 </template>
                 <div class="flex flex-col items-center px-6 py-4 space-y-8 h-full justify-center" v-else>
-                    <img class="h-48 w-auto" src="/imgs/mailbox_undraw.svg" alt="">
+                    <img class="h-48 w-auto" src="/img/mailbox_undraw.svg" alt="">
                     <p class="text-2xl text-center">
                         Ups! Looks like there are no emails yet. Try out the API or search for something else.
                     </p>
