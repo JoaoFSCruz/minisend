@@ -18,6 +18,6 @@ class DownloadAttachmentController extends Controller
     {
         $attachment = Attachment::findOrFail($request->input('attachment_id'));
 
-        return Storage::download($attachment->filepath, 'test');
+        return Storage::download($attachment->filepath);
     }
 }
