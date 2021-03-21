@@ -3,9 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\Email;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Events\MessageSent;
-use Illuminate\Queue\InteractsWithQueue;
 
 class EmailSent
 {
