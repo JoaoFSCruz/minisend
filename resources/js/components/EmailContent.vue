@@ -72,7 +72,7 @@
                     }
                 })
                     .then((response) => {
-                        let blob = new Blob([response.data], { type: 'application/pdf' });
+                        let blob = new Blob([response.data], { type: attachment.media_type });
                         let link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = attachment.filename;

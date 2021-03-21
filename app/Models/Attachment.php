@@ -16,7 +16,8 @@ class Attachment extends Model
 
     protected $appends = [
         'filename',
-        'filesize'
+        'filesize',
+        'media_type'
     ];
 
     /**
@@ -48,6 +49,16 @@ class Attachment extends Model
         }
 
         return $size . $sizeUnit;
+    }
+
+    /**
+     * Returns the file media type.
+     *
+     * @return string
+     */
+    public function getMediaTypeAttribute()
+    {
+        return mime_content_type(Storage::path($this->filepath));
     }
 
     /**
