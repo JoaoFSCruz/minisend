@@ -28,9 +28,9 @@
                 <div class="text-xl text-gray-600 lg:text-2xl" v-html="email.html"></div>
             </div>
 
-            <div>
+            <div v-if="email.attachments.length > 0">
                 <p class="text-base uppercase text-gray-400 font-semibold">{{ email.attachments.length }} Attachments:</p>
-                <div class="flex space-x-8 flex-wrap justify-end">
+                <div class="flex space-x-8 flex-wrap justify-end lg:justify-start">
                     <div
                         class="flex px-6 py-4 border-2 border-gray-200 shadow-sm bg-gray-50 rounded-lg items-center space-x-4 cursor-pointer mb-4"
                         v-for="attachment in email.attachments"

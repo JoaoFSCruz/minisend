@@ -28,15 +28,15 @@
             </div>
         </div>
         <div class="flex flex-col h-full lg:overflow-y-hidden lg:flex-row">
-            <div class="flex flex-col w-full h-2/3 overflow-y-auto border-t border-b lg:border-0 lg:w-1/3 lg:h-full">
+            <div class="flex flex-col w-full h-2/3 overflow-y-auto border-t border-b lg:border-0 lg:w-1/3 lg:h-full" ref="inbox">
                 <template v-if="emails.length > 0">
                     <div v-for="email in emails" :key="email.id">
                         <email :email="email" :selected-email="selectedEmail" @click="showEmail(email)"></email>
                     </div>
                 </template>
                 <div class="flex flex-col items-center px-6 py-4 space-y-8 justify-center lg:h-full" v-else>
-                    <img class="h-48 w-auto" src="/img/mailbox_undraw.svg" alt="">
-                    <p class="text-2xl text-center">
+                    <img class="h-24 lg:h-48 w-auto" src="/img/mailbox_undraw.svg" alt="">
+                    <p class="text-xl lg:text-2xl text-center">
                         Oops! Looks like there are no emails yet. Try out the API or search for something else.
                     </p>
                 </div>
@@ -64,6 +64,9 @@
                 emails: [],
                 selectedEmail: null,
                 searchQuery: '',
+                page: 1,
+                lastPage: 0,
+                getMoreResults: false
             }
         },
 
@@ -71,18 +74,53 @@
             this.getEmails();
         },
 
+        mounted() {
+            this.$refs.inbox.addEventListener('scroll', _.throttle(() => {
+                this.getMoreResults = this.shouldLoadMoreEmails();
+                if (this.getMoreResults && this.page < this.lastPage) {
+                    this.page++;
+                }
+            }, 350))
+        },
+
+        watch: {
+            page() {
+                this.getEmails();
+            },
+
+            searchQuery() {
+                this.page = 1;
+            }
+        },
+
         methods: {
             getEmails() {
-                axios.get('/emails', { params: { searchQuery: this.searchQuery }})
+                axios.get('/emails', {
+                    params: {
+                        searchQuery: this.searchQuery,
+                        page: this.page,
+                    }
+                })
                     .then((response) => {
-                        this.emails = response.data;
+                        this.lastPage = response.data.last_page;
+                        if (this.getMoreResults) {
+                            this.emails = this.emails.concat(response.data.data);
+                        } else {
+                            this.emails = response.data.data;
+                        }
                     })
                     .catch((error) => console.error(error.response));
             },
 
+            shouldLoadMoreEmails() {
+                let heightOfInbox = this.$refs.inbox.getBoundingClientRect().height;
+                let distanceFromTop = this.$refs.inbox.scrollTop;
+                return distanceFromTop >= heightOfInbox * 0.7;
+            },
+
             search: _.debounce((context) => {
                 context.getEmails();
-            }, 500),
+            }, 350),
 
             showEmail(email) {
                 this.selectedEmail = email;

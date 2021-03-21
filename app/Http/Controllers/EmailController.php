@@ -36,7 +36,7 @@ class EmailController extends Controller
                 ]);
         }
 
-        $emails = $query->orderByDesc('created_at')->get();
+        $emails = $query->orderByDesc('created_at')->paginate(15);
 
         return response()->json($emails, Response::HTTP_OK);
     }

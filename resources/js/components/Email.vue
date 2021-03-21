@@ -10,7 +10,7 @@
             </p>
             <div class="flex space-x-8">
                 <status-badge :status="email.status"></status-badge>
-                <span class="text-gray-400">{{ email.attachments.length }} Attachments</span>
+                <span v-if="email.attachments.length > 0" class="text-gray-400">{{ email.attachments.length }} Attachments</span>
             </div>
         </div>
 
