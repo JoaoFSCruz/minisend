@@ -27,11 +27,11 @@
                 <p class="mt-2 text-sm text-gray-400 lg:text-lg">Example: from:johndoe@mail.com to:sarahdoe@mail.com subject:"Live Concert"</p>
             </div>
         </div>
-        <div class="flex flex-col h-full lg:flex-row">
-            <div class="flex flex-col w-full lg:w-1/3 lg:h-full">
+        <div class="flex flex-col h-full lg:overflow-y-hidden lg:flex-row">
+            <div class="flex flex-col w-full h-2/3 overflow-y-auto border-t border-b lg:border-0 lg:w-1/3 lg:h-full">
                 <template v-if="emails.length > 0">
                     <div v-for="email in emails" :key="email.id">
-                        <email :email="email" @click="showEmail(email)"></email>
+                        <email :email="email" :selected-email="selectedEmail" @click="showEmail(email)"></email>
                     </div>
                 </template>
                 <div class="flex flex-col items-center px-6 py-4 space-y-8 justify-center lg:h-full" v-else>
@@ -41,7 +41,7 @@
                     </p>
                 </div>
             </div>
-            <div class="flex w-full lg:w-2/3 lg:h-full">
+            <div class="flex w-full h-2/3 overflow-y-auto bg-gray-100 lg:w-2/3 lg:h-full lg:pt-8">
                 <email-content :email="selectedEmail"></email-content>
             </div>
         </div>
