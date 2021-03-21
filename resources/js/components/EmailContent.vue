@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 px-24 py-16 w-full h-full">
+    <div class="bg-gray-100 p-8 w-full h-full lg:px-24 lg:py-16">
         <div class="flex flex-col space-y-16" v-if="email">
             <div>
                 <div class="flex justify-between items-center tracking-wide">
@@ -49,8 +49,8 @@
         <div class="h-full flex justify-center items-center" v-else>
             <div class="flex flex-col items-center space-y-16">
                 <img class="h-64 w-auto" src="/img/envelope_undraw.svg" alt="">
-                <p class="text-2xl">
-                    You have not selected an email yet. Click on one of them at your left to see it's content.
+                <p class="text-2xl text-center">
+                    You have not selected an email yet. Click on one of them at your left to see its content.
                 </p>
             </div>
         </div>
@@ -72,14 +72,13 @@
                     }
                 })
                     .then((response) => {
-                        console.log(response)
                         let blob = new Blob([response.data], { type: 'application/pdf' });
                         let link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = attachment.filename;
                         link.click();
                     })
-                    .catch((error) => console.log(error.response));
+                    .catch((error) => console.error(error.response));
             },
         }
     }
