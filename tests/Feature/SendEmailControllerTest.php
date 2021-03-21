@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
+use App\Models\Email;
 use App\Jobs\SendEmail;
 use App\Mail\GeneralEmail;
-use App\Models\Email;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Queue;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,7 +39,7 @@ class SendEmailControllerTest extends TestCase
             ]
         ];
 
-        $this->json('POST', route('api.email.send'), $payload)
+        $this->postJson(route('api.email.send'), $payload)
             ->assertStatus(Response::HTTP_ACCEPTED);
 
         Storage::assertExists('public/files/test.txt');
@@ -53,7 +53,7 @@ class SendEmailControllerTest extends TestCase
      */
     public function it_does_not_send_an_email_when_receiving_an_invalid_payload($payload)
     {
-        $this->json('POST', route('api.email.send'), $payload)
+        $this->postJson(route('api.email.send'), $payload)
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
         Mail::assertNotSent(GeneralEmail::class);
@@ -73,7 +73,7 @@ class SendEmailControllerTest extends TestCase
             ]
         ];
 
-        $this->json('POST', route('api.email.send'), $payload)
+        $this->postJson(route('api.email.send'), $payload)
             ->assertStatus(Response::HTTP_ACCEPTED);
 
         $email = Email::with('attachments')->first();
@@ -85,7 +85,7 @@ class SendEmailControllerTest extends TestCase
         self::assertEquals($payload['subject'], $email->subject);
         self::assertEquals($payload['text'], $email->text);
         self::assertEquals($payload['html'], $email->html);
-        self::assertEquals('posted', $email->status);
+        self::assertEquals('Posted', $email->status);
         self::assertEquals(
             'public/files/' . $payload['attachments'][0]->getClientOriginalName(),
             $email->attachments->first()->filepath
@@ -106,7 +106,7 @@ class SendEmailControllerTest extends TestCase
             ]
         ];
 
-        $this->json('POST', route('api.email.send'), $payload);
+        $this->postJson(route('api.email.send'), $payload);
 
         Mail::assertSent(GeneralEmail::class, function ($email) use ($payload) {
             $email->build();
@@ -135,7 +135,7 @@ class SendEmailControllerTest extends TestCase
             ]
         ];
 
-        $this->json('POST', route('api.email.send'), $payload);
+        $this->postJson(route('api.email.send'), $payload);
 
         Queue::assertPushed(SendEmail::class);
     }
@@ -148,7 +148,7 @@ class SendEmailControllerTest extends TestCase
     {
         Queue::fake();
 
-        $this->json('POST', route('api.email.send'), $payload);
+        $this->postJson(route('api.email.send'), $payload);
 
         Queue::assertNotPushed(SendEmail::class);
     }
